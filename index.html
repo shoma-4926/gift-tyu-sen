@@ -61,11 +61,8 @@
             }
 
             // 次のランダムな数字を表示
-            const randomNumber = shuffledNumbers[currentIndex];
+            const randomNumber = shuffledNumbers[inputNumber];
             document.getElementById('random-number').textContent = `選ばれた数字: ${randomNumber}`;
-
-            // 次の数字に進む
-            currentIndex = (currentIndex + 1) % shuffledNumbers.length;
         }
     </script>
 </body>
