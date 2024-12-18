@@ -57,7 +57,14 @@
         const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
         // シードを使ってランダム順に並べる
-        const shuffledNumbers = shuffleWithSeed(numbers, SEED);
+        let shuffledNumbers = shuffleWithSeed(numbers, SEED);
+
+        // シードによる並び替えがmemberの数字と重複しないように調整
+        function adjustShuffledNumbers() {
+            let availableNumbers = Object.keys(member).map(Number); // memberの数字を取得
+            shuffledNumbers = shuffledNumbers.filter(num => !availableNumbers.includes(num));
+            shuffledNumbers = shuffleWithSeed(shuffledNumbers, SEED);
+        }
 
         // 最初に表示するランダムな数字を決定（順番に表示）
         let currentIndex = 0;
@@ -74,6 +81,7 @@
             }
 
             // shuffledNumbers配列の次のランダムな番号を表示
+            adjustShuffledNumbers(); // シャッフル後に重複を除外
             const randomNumber = member[shuffledNumbers[inputText]];
 
             // 結果を表示
