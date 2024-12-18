@@ -3,39 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>決定的ランダム文字列</title>
-    <script>
-        // シードを使った決定的な乱数生成器（簡易版）
-        function seededRandom(seed) {
-            const x = Math.sin(seed) * 10000;
-            return x - Math.floor(x);
-        }
-
-        // 決定的ランダム文字列を生成する関数
-        function generateDeterministicString(seed, length) {
-            const characters = '012345678';
-            let result = '';
-            let currentSeed = seed;
-
-            for (let i = 0; i < length; i++) {
-                const randomValue = seededRandom(currentSeed);
-                const index = Math.floor(randomValue * characters.length);
-                result += characters[index];
-                currentSeed += 1; // シード値を更新
-            }
-
-            return result;
-        }
-
-        window.onload = function() {
-            const seed = 12345; // 固定のシード値を設定
-            const randomString = generateDeterministicString(seed, 1);
-            document.getElementById("randomString").textContent = randomString;
-        }
-    </script>
+    <title>ランダムな数字</title>
 </head>
 <body>
-    <h1>決定的ランダム文字列</h1>
-    <p>生成された文字列: <span id="randomString"></span></p>
+    <h1>ランダムな数字 (0〜8) の表示</h1>
+    <p id="random-number"></p>
+
+    <script>
+        // 0から8までの数字の配列を作成
+        const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+
+        // 配列からランダムに一つ選び、その数字を表示
+        function getRandomNumber() {
+            // 配列のインデックスをランダムに選ぶ
+            const randomIndex = Math.floor(Math.random() * numbers.length);
+            // ランダムに選ばれた数字を取得
+            const randomNumber = numbers.splice(randomIndex, 1)[0];
+            
+            // 選ばれた数字を表示
+            document.getElementById('random-number').textContent = `選ばれた数字: ${randomNumber}`;
+        }
+
+        // ページが読み込まれる度に実行
+        getRandomNumber();
+    </script>
 </body>
 </html>
