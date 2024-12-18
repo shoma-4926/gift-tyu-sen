@@ -29,6 +29,19 @@
             };
         }
 
+        // メンバーをオブジェクトで定義
+        const member = {
+            0: "服部",
+            1: "よしこ",
+            2: "けんじ",
+            3: "せいじ",
+            4: "しょうま",
+            5: "やすし",
+            6: "こうき",
+            7: "たっくん",
+            8: "てんちゃん"
+        };
+        
         // 乱数を使って配列をシャッフルする
         function shuffleWithSeed(array, seed) {
             const random = xorshift(seed);
@@ -60,9 +73,11 @@
                 return;
             }
 
-            // 次のランダムな数字を表示
-            const randomNumber = shuffledNumbers[inputNumber];
-            document.getElementById('random-number').textContent = `選ばれた数字: ${randomNumber}`;
+            // shuffledNumbers配列の次のランダムな番号を表示
+            const randomNumber = member[shuffledNumbers[inputText]];
+
+            // 結果を表示
+            document.getElementById('random-number').textContent = `選ばれた名前: ${randomNumber}`;
         }
     </script>
 </body>
