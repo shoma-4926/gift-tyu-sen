@@ -11,11 +11,11 @@
 
     <script>
         // 任意のシード値を設定（このシードを変更すると結果が変わります）
-        const SEED = 'myFixedSeed123';
+        const SEED = 'test0123';
 
         // シードを使ったランダム関数の作成
         function seededRandom(seed) {
-            let x = Math.sin(seed++) * 1000;
+            let x = Math.sin(seed++) * 10000;
             return x - Math.floor(x);
         }
 
