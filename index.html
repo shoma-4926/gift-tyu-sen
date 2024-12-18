@@ -8,6 +8,7 @@
 <body>
     <h1>固定ランダムな数字 (0〜8) の表示あああ</h1>
     <p id="random-number"></p>
+    <input type="text" id="input-box">
     <button type="button" onclick="getNextRandomNumber()">クリック</button>
     
     <script>
@@ -50,13 +51,10 @@
 
         // 次のランダムな数字を表示する関数
         function getNextRandomNumber() {
-            if (currentIndex < shuffledNumbers.length) {
-                const randomNumber = shuffledNumbers[currentIndex];
-                document.getElementById('random-number').textContent = `選ばれた数字: ${randomNumber}`;
-                currentIndex++;
-            } else {
-                document.getElementById('random-number').textContent = "すべての数字が表示されました";
-            }
+            
+            const inputText = document.getElementById('input-box').value;
+            const randomNumber = shuffledNumbers[currentIndex];
+            document.getElementById('random-number').textContent = `選ばれた数字: ${numbers[$inputText]}`;
         }
     </script>
 </body>
