@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>決定的ランダム文字列</title>
+    <script>
+        // シードを使った決定的な乱数生成器（簡易版）
+        function seededRandom(seed) {
+            const x = Math.sin(seed) * 10000;
+            return x - Math.floor(x);
+        }
+
+        // 決定的ランダム文字列を生成する関数
+        function generateDeterministicString(seed, length) {
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let result = '';
+            let currentSeed = seed;
+
+            for (let i = 0; i < length; i++) {
+                const randomValue = seededRandom(currentSeed);
+                const index = Math.floor(randomValue * characters.length);
+                result += characters[index];
+                currentSeed += 1; // シード値を更新
+            }
+
+            return result;
+        }
+
+        window.onload = function() {
+            const seed = 12345; // 固定のシード値を設定
+            const randomString = generateDeterministicString(seed, 16);
+            document.getElementById("randomString").textContent = randomString;
+        }
+    </script>
+</head>
+<body>
+    <h1>決定的ランダム文字列</h1>
+    <p>生成された文字列: <span id="randomString"></span></p>
+</body>
+</html>
