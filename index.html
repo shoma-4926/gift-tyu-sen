@@ -3,29 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ランダムな数字</title>
+    <title>シードによる固定ランダム</title>
 </head>
 <body>
-    <h1>ランダムな数字 (0〜8) の表示</h1>
+    <h1>固定ランダムな数字 (0〜8) の表示</h1>
     <p id="random-number"></p>
 
     <script>
+        // 任意のシード値を設定（このシードを変更すると結果が変わります）
+        const SEED = 'myFixedSeed123';
+
+        // シードを使ったランダム関数の作成
+        function seededRandom(seed) {
+            let x = Math.sin(seed++) * 10000;
+            return x - Math.floor(x);
+        }
+
+        // 配列のシャッフル
+        function shuffleWithSeed(array, seed) {
+            let shuffledArray = array.slice(); // 配列のコピーを作成
+            for (let i = shuffledArray.length - 1; i > 0; i--) {
+                let j = Math.floor(seededRandom(seed + i) * (i + 1));
+                [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+            }
+            return shuffledArray;
+        }
+
         // 0から8までの数字の配列を作成
         const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 
-        // 配列からランダムに一つ選び、その数字を表示
-        function getRandomNumber() {
-            // 配列のインデックスをランダムに選ぶ
-            const randomIndex = Math.floor(Math.random() * numbers.length);
-            // ランダムに選ばれた数字を取得
-            const randomNumber = numbers.splice(randomIndex, 1)[0];
-            
-            // 選ばれた数字を表示
-            document.getElementById('random-number').textContent = `選ばれた数字: ${randomNumber}`;
+        // シードを使ってランダム順に並べる
+        const shuffledNumbers = shuffleWithSeed(numbers, SEED);
+
+        // 最初に表示するランダムな数字を決定（順番に表示）
+        let currentIndex = 0;
+
+        // 次のランダムな数字を表示する関数
+        function getNextRandomNumber() {
+            if (currentIndex < shuffledNumbers.length) {
+                const randomNumber = shuffledNumbers[currentIndex];
+                document.getElementById('random-number').textContent = `選ばれた数字: ${randomNumber}`;
+                currentIndex++;
+            } else {
+                document.getElementById('random-number').textContent = "すべての数字が表示されました";
+            }
         }
 
-        // ページが読み込まれる度に実行
-        getRandomNumber();
+        // 初回表示
+        getNextRandomNumber();
     </script>
 </body>
 </html>
