@@ -6,24 +6,34 @@
     <title>シードによる固定ランダム</title>
 </head>
 <body>
-    <h1>固定ランダムな数字 (0〜8) の表示b</h1>
+    <h1>固定ランダムな数字 (0〜8) の表示あああ</h1>
     <p id="random-number"></p>
-    <button type=”button” onclick="getNextRandomNumber()">クリック</button>
+    <button type="button" onclick="getNextRandomNumber()">クリック</button>
+    
     <script>
         // 任意のシード値を設定（このシードを変更すると結果が変わります）
         const SEED = 'test0123';
 
-        // シードを使ったランダム関数の作成
-        function seededRandom(seed) {
-            let x = Math.sin(seed++) * 10000;
-            return x - Math.floor(x);
+        // シードを基に乱数を生成するXorshiftアルゴリズム
+        function xorshift(seed) {
+            let state = 0;
+            for (let i = 0; i < seed.length; i++) {
+                state = (state << 5) - state + seed.charCodeAt(i);
+            }
+            return function() {
+                state ^= state << 21;
+                state ^= state >>> 35;
+                state ^= state << 4;
+                return (state >>> 0) / 0xFFFFFFFF;
+            };
         }
 
-        // 配列のシャッフル
+        // 乱数を使って配列をシャッフルする
         function shuffleWithSeed(array, seed) {
+            const random = xorshift(seed);
             let shuffledArray = array.slice(); // 配列のコピーを作成
             for (let i = shuffledArray.length - 1; i > 0; i--) {
-                let j = Math.floor(seededRandom(seed + i) * (i + 1));
+                let j = Math.floor(random() * (i + 1));
                 [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
             }
             return shuffledArray;
