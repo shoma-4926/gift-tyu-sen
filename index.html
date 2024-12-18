@@ -6,9 +6,9 @@
     <title>シードによる固定ランダム</title>
 </head>
 <body>
-    <h1>固定ランダムな数字 (0〜8) の表示あああ</h1>
+    <h1>固定ランダムな数字 (0〜8) の表示</h1>
     <p id="random-number"></p>
-    <input type="text" id="input-box">
+    <input type="text" id="input-box" placeholder="数字を入力">
     <button type="button" onclick="getNextRandomNumber()">クリック</button>
     
     <script>
@@ -51,10 +51,21 @@
 
         // 次のランダムな数字を表示する関数
         function getNextRandomNumber() {
-            
             const inputText = document.getElementById('input-box').value;
+
+            // 入力された数字が0〜8の範囲内か確認
+            const inputNumber = parseInt(inputText, 10);
+            if (isNaN(inputNumber) || inputNumber < 0 || inputNumber > 8) {
+                document.getElementById('random-number').textContent = '無効な入力です。0から8の間で入力してください。';
+                return;
+            }
+
+            // 次のランダムな数字を表示
             const randomNumber = shuffledNumbers[currentIndex];
-            document.getElementById('random-number').textContent = `選ばれた数字: ${numbers[$inputText]}`;
+            document.getElementById('random-number').textContent = `選ばれた数字: ${randomNumber}`;
+
+            // 次の数字に進む
+            currentIndex = (currentIndex + 1) % shuffledNumbers.length;
         }
     </script>
 </body>
